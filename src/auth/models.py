@@ -22,7 +22,7 @@ class User(SQLModel, table=True):
     last_name: str = Field(nullable=True)
     is_verified: bool = False
     email: str
-    password_hash: str
+    password_hash: str = Field(exclude=True)
     created_at: datetime = Field(sa_column=Column(pg.TIMESTAMP, default=datetime.now))
     updated_at: datetime = Field(sa_column=Column(pg.TIMESTAMP, default=datetime.now))
 
