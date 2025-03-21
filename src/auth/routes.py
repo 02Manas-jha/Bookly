@@ -4,6 +4,7 @@ from .service import UserService
 from src.db.main import get_session
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from fastapi.exceptions import HTTPException
+from .utils import create_access_token, decode_token
 
 auth_router = APIRouter()
 user_service = UserService()
