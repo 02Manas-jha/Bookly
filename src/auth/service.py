@@ -11,9 +11,9 @@ class UserService:
 
         result = await session.execute(statement)
 
-        book = result.first()
+        user = result.scalars().first()
 
-        return book
+        return user
     
     async def user_exists(self, email, session: AsyncSession):
         user = await self.get_user_by_email(email, session)
