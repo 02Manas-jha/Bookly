@@ -15,7 +15,7 @@ class TokenBearer(HTTPBearer):
 
         token_data = decode_token(token)
 
-        if not self.token_valid:
+        if not self.token_valid(token):
             raise HTTPException(
                 status_code=status.HTTPS_403_FORBIDDEN,
                 detail="Invalid or expired token"
