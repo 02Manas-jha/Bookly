@@ -1,5 +1,6 @@
-from sqlmodel import SQLModel, Field, Column
+from sqlmodel import SQLModel, Field, Column, Relationship
 import sqlalchemy.dialects.postgresql as pg
+from src.auth import models
 from datetime import datetime, date
 from uuid import UUID
 from typing import Optional
@@ -28,6 +29,7 @@ class BookSchema(SQLModel, table=True):
     )
     created_at:datetime = Field(sa_column=Column(pg.TIMESTAMP, default=datetime.now))
     updated_at:datetime = Field(sa_column=Column(pg.TIMESTAMP, default=datetime.now))
+    user: Optional["models.User"] = Relationship(back_populates="books")
 
     def __repr__(self):
         return f"<Book {self.title}>"
