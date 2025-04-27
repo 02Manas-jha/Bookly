@@ -21,6 +21,8 @@ class UserModel(BaseModel):
     password_hash: str = Field(exclude=True)
     created_at: datetime
     updated_at: datetime
+
+class UserBookModel(UserModel):
     books: List[BookSchema] 
 
 class UserLoginModel(BaseModel):
