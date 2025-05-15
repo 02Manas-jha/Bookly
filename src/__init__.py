@@ -3,6 +3,7 @@ from src.books.routes import book_router
 from src.auth.routes import auth_router
 from src.reviews.routes import review_router
 from src.tags.routes import tags_router
+from .errors import register_error_handlers
 from contextlib import asynccontextmanager
 from src.db.main import init_db
 
@@ -20,6 +21,8 @@ app = FastAPI(
     description='A RESTful API for a book review web service',
     version=version,
 )
+
+register_error_handlers(app)
 
 app.include_router(book_router,prefix=f"/api/{version}/books", tags=['books'])
 app.include_router(auth_router,prefix=f"/api/{version}/auth", tags=['auth'])
