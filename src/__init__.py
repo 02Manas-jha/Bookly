@@ -23,6 +23,10 @@ app = FastAPI(
     version=version,
 )
 
+@app.get("/")
+def home():
+    return {"message": "Hello from FastAPI!"}
+
 register_error_handlers(app)
 register_middleware(app)
 
