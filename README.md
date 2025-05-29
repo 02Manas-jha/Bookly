@@ -15,13 +15,13 @@ Ensure you have the following installed:
 ### 1. Clone the project repository:
 
 ```bash
-git clone https://github.com/jod35/fastapi-beyond-CRUD.git
+git clone https://github.com/02Manas-jha/Bookly.git
 ```
 
 ### 2. Navigate to the project directory:
 
 ```bash
-cd fastapi-beyond-CRUD/
+cd Bookly/
 ```
 
 ### 3. Create and activate a virtual environment:
