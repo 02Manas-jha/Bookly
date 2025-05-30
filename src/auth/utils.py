@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from itsdangerous import URLSafeTimedSerializer
 import uuid
 import jwt
 import logging
@@ -47,3 +48,24 @@ def decode_token(token: str) -> dict:
     except Exception as e:
         logging.exception(e)
         return None
+
+serializer = URLSafeTimedSerializer(
+    secret_key=Config.JWT_SECRET, salt="email-configuration"
+)
+
+def create_url_safe_token(data: dict):
+    """Serialize a dict into a URLSafe token"""
+
+    token = serializer.dumps(data)
+
+    return token
+
+def decode_url_safe_token(token: str):
+    """Deserialize a URLSafe token to get data"""
+    try:
+        token_data = serializer.loads(token)
+
+        return token_data
+    
+    except Exception as e:
+        logging.error(str(e))
