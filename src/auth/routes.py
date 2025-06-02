@@ -17,6 +17,7 @@ from src.errors import(
 )
 from src.config import Config
 from src.mail import mail, create_message
+from src.celery_tasks import send_email
 
 auth_router = APIRouter()
 user_service = UserService()
@@ -29,14 +30,9 @@ async def send_mail(emails: EmailModel):
     emails = emails.addresses
 
     html = "<h1>Welcome to the app</h1>"
+    subject = "Welcome to our app"
 
-    message = create_message(
-        recipients=emails,
-        subject="Welcome",
-        body=html
-    )
-
-    await mail.send_message(message)
+    send_email.delay(emails, subject, html)
 
     return {"message":"email sent successfully"}
 
@@ -60,11 +56,11 @@ async def create_user(user_data: UserCreateModel, bg_tasks: BackgroundTasks,sess
     <p>Please click this <a href="{link}">link</a> to verify your email</p>
     """
 
-    message = create_message(
-        recipients=[email], subject="Verify your email", body=html_msg
-    )
+    emails = [email]
 
-    bg_tasks.add_task(mail.send_message,message) 
+    subject = "Verify Your email"
+
+    send_email.delay(emails, subject, html_msg) 
 
     return {
         "message":"Account Created! Check email to verify your account",
@@ -177,11 +173,8 @@ async def password_reset_request(email_data: PasswordResetRequestModel):
     <p>Please click this <a href="{link}">link</a> to Reset Your Password</p>
     """
     
-    message = create_message(
-        recipients=[email], subject="Reset Your Password", body=html_msg
-    )
-
-    await mail.send_message(message)
+    subject = "Reset Your Password"
+    send_email.delay([email], subject, html_msg)
 
     return JSONResponse(
         content={
