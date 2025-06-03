@@ -17,15 +17,31 @@ async def life_span(app:FastAPI):
 
 version = 'v1'
 
+description = """
+A REST API for a book review web service.
+
+This REST API is able to;
+- Create Read Update And delete books
+- Add reviews to books
+- Add tags to Books e.t.c.
+    """
+
+version_prefix ="/api/{version}"
+
 app = FastAPI(
     title='Bookly',
-    description='A RESTful API for a book review web service',
+    description=description,
     version=version,
+    contact={
+        "name": "Manas Jha",
+        "url": "https://github.com/02Manas-jha",
+        "email": "manasjha0203@gmail.com",
+    },
+    openapi_url=f"{version_prefix}/openapi.json",
+    docs_url=f"{version_prefix}/docs",
+    redoc_url=f"{version_prefix}/redoc"
 )
 
-@app.get("/")
-def home():
-    return {"message": "Hello from FastAPI!"}
 
 register_error_handlers(app)
 register_middleware(app)
